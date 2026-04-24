@@ -9,7 +9,7 @@ class RoomMessagesController < ApplicationController
     @message = @room.room_messages.create(message_params)
 
     if @message.save
-      ActionCable.server.broadcast("room_channel_#{params[:room_id]}", @message)
+      ActionCable.server.broadcast("room_channel_#{params[:room_id]}", @message.as_json)
       render json: @message
     else
       render json: @message.errors, status: :unprocessable_entity
